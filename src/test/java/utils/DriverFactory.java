@@ -10,7 +10,14 @@ public class DriverFactory {
 
     public static WebDriver initDriver(){
         WebDriverManager.chromedriver().setup();
-        driver=new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--headless=new");   // Headless mode
+        options.addArguments("--no-sandbox");     // Required for Docker
+        options.addArguments("--disable-dev-shm-usage"); // Prevents shared memory issues
+        options.addArguments("--window-size=1920,1080");
+
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         return driver;
     }
